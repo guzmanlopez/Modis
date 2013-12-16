@@ -9,13 +9,15 @@ library(rgeos)
 library(rgdal)
 
 
-costa <- readShapeLines(fn="~/Git/MODIS/shapes/linea_de_costa.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"))
+costa <- readShapeLines(fn="~/Git/Modis/shapes/linea_de_costa.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
-zonas_juridicas <- readShapePoly(fn="~/Git/MODIS/shapes/zonas_juridicas.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"))
+zonas_juridicas <- readShapePoly(fn="~/Git/Modis/shapes/zonas_juridicas.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
-centros_poblados <- readShapePoints(fn="~/Git/MODIS/shapes/seleccion_centros_poblados.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"))
+centros_poblados <- readShapePoints(fn="~/Git/Modis/shapes/seleccion_centros_poblados.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
-limite_RdelaP <- readShapeLines(fn="~/Git/MODIS/shapes/LIMITES_RPLATA.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"))
+limite_RdelaP <- readShapeLines(fn="~/Git/Modis/shapes/LIMITES_RPLATA.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+
+ema <- readShapePoints(fn="~/Git/Modis/shapes/EstacionesMonitoreoAmbiental.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
 
 shinyServer(function(input, output) {
@@ -23,7 +25,7 @@ shinyServer(function(input, output) {
   ### Logos
   output$logo <- renderImage({
     
-    filename <- "/home/guzman/Documentos/FREPLATA/R/GUI/LOGO_MODIS_APP.png"
+    filename <- "/home/usuario/Documentos/FREPLATA/APP/MODIS/Logos/logo_modis_freplata.png"
     list(src = filename, contentType = 'image/png')
     }, deleteFile= FALSE)
   
@@ -34,8 +36,10 @@ shinyServer(function(input, output) {
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
       
-      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
+      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
       
+      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
+            
       return(url)    
   })
     
@@ -52,7 +56,7 @@ shinyServer(function(input, output) {
       array <- readJPEG(image, native=FALSE)
       r <- raster(array[,,2])
       
-      projection(r) <- "+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"
+      projection(r) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
       
       extent(r) <- c(limites[1], limites[2], limites[3], limites[4])
       
@@ -82,7 +86,9 @@ shinyServer(function(input, output) {
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
       
-      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
+      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
+      
+      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
       
     extent <- getURL(url=url)
     extent <- strsplit(extent, split="\n")
@@ -134,6 +140,13 @@ shinyServer(function(input, output) {
       plot(centros_poblados, col="grey", pch=19, cex=1, add=T)
       text(centros_poblados, labels=centros_poblados$CENTRO, cex=0.9, font=2, pos=3)
     }
+    if(any(input$capas=="ema")) {
+      
+      plot(ema, col=0, bg=1, pch=c(21,22,24), cex=1.2, add=T)
+      text(ema, labels=ema$NOMBRE, cex=0.8, font=2, pos=3, col="grey")
+  
+    }
+    
     
     ### Subir Archivos    
     # CSV
@@ -141,7 +154,7 @@ shinyServer(function(input, output) {
     if (is.null(inFile_csv)) return(NULL) else {
       
       puntos <- read.csv(inFile_csv$datapath, header=TRUE, sep=",")
-      puntos <- SpatialPointsDataFrame(coords=data.frame(lon=puntos[,1], lat=puntos[,2]), data=data.frame(ID=puntos[,3]), proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 towgs84=0,0,0"))
+      puntos <- SpatialPointsDataFrame(coords=data.frame(lon=puntos[,1], lat=puntos[,2]), data=data.frame(ID=puntos[,3]), proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
       plot(puntos, add=T, cex=input$tam, col=input$col, pch=19)
       text(puntos, labels=puntos$ID, cex=input$tam_texto, font=2, pos=3, col="grey")
@@ -177,8 +190,10 @@ shinyServer(function(input, output) {
 output$descarga_tiff <- renderUI({
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
-      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".")  
-        
+      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".")  
+      
+      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".") 
+            
  HTML(paste('<a id=\"descarga\" class=\"btn shiny-download-link btn-success\"','href=\"',url,'\" target=\"_blank\">Descargar GeoTIFF</a>'))
     
 })
