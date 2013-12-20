@@ -36,9 +36,9 @@ shinyServer(function(input, output) {
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
       
-      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
+      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
       
-      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
+      #url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "jpg", sep=".")
             
       return(url)    
   })
@@ -86,9 +86,9 @@ shinyServer(function(input, output) {
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
       
-      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
+      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
       
-      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
+      #url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "txt", sep=".")
       
     extent <- getURL(url=url)
     extent <- strsplit(extent, split="\n")
@@ -190,9 +190,9 @@ shinyServer(function(input, output) {
 output$descarga_tiff <- renderUI({
       
       fecha <- paste(substr(x=input$fecha,start=1,stop=4),strftime(input$fecha, format = "%j"),sep="")
-      #url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".")  
+      url <- paste("http://rapidfire.sci.gsfc.nasa.gov/imagery/subsets/?subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".")  
       
-      url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".") 
+      #url <- paste("http://lance2.modaps.eosdis.nasa.gov/imagery/subsets/?project=&subset=AERONET_CEILAP-BA", fecha, input$sat, input$res, "tif", sep=".") 
             
  HTML(paste('<a id=\"descarga\" class=\"btn shiny-download-link btn-success\"','href=\"',url,'\" target=\"_blank\">Descargar GeoTIFF</a>'))
     
