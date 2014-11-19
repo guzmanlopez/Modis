@@ -7,20 +7,20 @@ Requisitos
 ===
 
 ```R
-library(shiny)
-library(RCurl)
-library(jpeg)
-library(raster)
-library(maptools)
-library(rgeos)
-library(rgdal)
+library('shiny')
+library('RCurl')
+library('jpeg')
+library('raster')
+library('maptools')
+library('rgeos')
+library('rgdal')
 ```
 
 Ejecutar app desde R: 
 ===
 
 ```R
-runGitHub("Modis", "guzmanlopez")
+runGitHub('Modis', 'guzmanlopez')
 ```
 
 Capturas de pantalla
