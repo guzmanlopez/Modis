@@ -8,27 +8,24 @@ library(maptools)
 library(rgeos)
 library(rgdal)
 
+# Establecer entorno de trabajo en carpeta temporal
+setwd("/tmp/")
 
-costa <- readShapeLines(fn="~/Git/Modis/shapes/linea_de_costa.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+# Cargar entorno de trabajo
+url_entorno <- "https://github.com/guzmanlopez/Modis/blob/master/modis.RData?raw=true"
+destfile <- paste(getwd(),"/modis.RData", sep="")
+wd <- paste(getwd(),"/", sep="")
+download.file(url = url_entorno, destfile=destfile, method = "wget")
+load("modis.RData")
 
-zonas_juridicas <- readShapePoly(fn="~/Git/Modis/shapes/zonas_juridicas.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
-
-centros_poblados <- readShapePoints(fn="~/Git/Modis/shapes/seleccion_centros_poblados.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
-
-limite_RdelaP <- readShapeLines(fn="~/Git/Modis/shapes/LIMITES_RPLATA.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
-
-ema <- readShapePoints(fn="~/Git/Modis/shapes/EstacionesMonitoreoAmbiental.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
-
+# costa <- readShapeLines(fn="~/GitHub/Modis/shapes/linea_de_costa.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+# zonas_juridicas <- readShapePoly(fn="~/GitHub/Modis/shapes/zonas_juridicas.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+# centros_poblados <- readShapePoints(fn="~/GitHub/Modis/shapes/seleccion_centros_poblados.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+# limite_RdelaP <- readShapeLines(fn="~/GitHub/Modis/shapes/LIMITES_RPLATA.shp", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+##ema <- readShapePoints(fn="~/GitHub/Modis/shapes/", proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 
 shinyServer(function(input, output) {
-  
-  ### Logos
-  output$logo <- renderImage({
     
-    filename <- "/home/usuario/Documentos/FREPLATA/APP/MODIS/Logos/logo_modis_freplata.png"
-    list(src = filename, contentType = 'image/png')
-    }, deleteFile= FALSE)
-  
   ### Entradas de datos ####
   datasetInput_URL <- reactive({
     

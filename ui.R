@@ -11,7 +11,7 @@ shinyUI(pageWithSidebar(
   #### Sidebar ####
   sidebarPanel(
     
-    imageOutput(outputId="logo",height=70), ### LOGO
+    HTML('<div style="clear: left;"><img src="https://raw.githubusercontent.com/guzmanlopez/Ema/master/Figuras/logo_ema_freplata.png"/></div>'),
     tags$hr(),
     
     conditionalPanel(condition="input.tabs=='MODIS'",
