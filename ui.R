@@ -11,7 +11,7 @@ shinyUI(pageWithSidebar(
   #### Sidebar ####
   sidebarPanel(
     
-    HTML('<div style="clear: left;"><img src="https://raw.githubusercontent.com/guzmanlopez/Ema/master/Figuras/logo_ema_freplata.png"/></div>'),
+    HTML('<div style="clear: left;"><img src="https://raw.githubusercontent.com/guzmanlopez/Modis/master/Figuras/LOGO_MODIS_APP.png"/></div>'),
     tags$hr(),
     
     conditionalPanel(condition="input.tabs=='MODIS'",
@@ -96,14 +96,14 @@ shinyUI(pageWithSidebar(
                                  
                                  tags$hr(),
                                  h3(p(strong('Guía de usuario'))),
-                                 HTML('<div style="clear: left;"><img src="https://dl.dropboxusercontent.com/u/49775366/Ema/PDF.png" alt="" style="width: 5%; height: 5%; float: left; margin-right:5px" /></div>'),
+                                 HTML('<div style="clear: left;"><img src="https://raw.githubusercontent.com/guzmanlopez/Modis/master/Figuras/PDF.png" alt="" style="width: 5%; height: 5%; float: left; margin-right:5px" /></div>'),
                                  br(),
-                                 a('MODIS web app', href="https://dl.dropboxusercontent.com/u/49775366/MODIS/Gu%C3%ADa%20de%20usuario%20MODIS%20web%20app.pdf", target="_blank"),
+                                 a('MODIS web app', href="https://github.com/guzmanlopez/Modis/blob/master/Manual/Gu%C3%ADa%20de%20usuario%20MODIS%20web%20app.pdf?raw=true", target="_blank"),
                                  tags$hr(),
                                  h3(p(strong('Código fuente'))),
-                                 HTML('<div style="clear: left;"><img src="https://dl.dropboxusercontent.com/u/49775366/Ema/github-10-512.png" alt="" style="width: 5%; height: 5%; float: left; margin-right:5px" /></div>'),
+                                 HTML('<div style="clear: left;"><img src="https://raw.githubusercontent.com/guzmanlopez/Modis/master/Figuras/github-10-512.png" alt="" style="width: 5%; height: 5%; float: left; margin-right:5px" /></div>'),
                                  br(),
-                                 a('Repositorio GitHub', href="https://github.com/guzmanlopez/Modis.git", target="_blank"),
+                                 a('Repositorio GitHub', href="https://github.com/guzmanlopez/Modis", target="_blank"),
                                  tags$hr(),
                                  h3(p(strong('Referencias'))),
                                  p(style="text-align:justify",strong('R Core Team (2013).'),'R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. ISBN 3-900051-07-0, URL',a("http://www.R-project.org/",href="http://www.R-project.org/",target="_blank")),
@@ -131,9 +131,7 @@ shinyUI(pageWithSidebar(
                                  tags$hr(),
                                  HTML('<div style="clear: left;"><img src="https://dl.dropboxusercontent.com/u/49775366/Ema/foto_perfil.jpg" alt="" style="float: left; margin-right:5px" /></div>'),
                                  strong('Autor'),
-                                 p(a('Guzmán López', href="http://www.linkedin.com/pub/guzm%C3%A1n-l%C3%B3pez/59/230/812", target="_blank"),' - guzilop@gmail.com',br(),'Biólogo | Asistente para el manejo de información oceanográfica',br(),a('Proyecto FREPLATA - URU/09/G31',href="http://www.freplata.org/", target="_blank")),
+                                 p(a('Guzmán López', href="https://www.linkedin.com/pub/guzm%C3%A1n-l%C3%B3pez/59/230/812", target="_blank"),' - guzilop@gmail.com',br(),'Biólogo | Asistente para el manejo de información oceanográfica',br(),a('Proyecto FREPLATA - URU/09/G31',href="http://www.freplata.org/", target="_blank")),
                                  br()) # Acerca de este programa
   ))
 ))
-        
-    
