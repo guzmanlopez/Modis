@@ -13,3 +13,5 @@ library(raster)
 library(maptools)
 library(rgeos)
 library(rgdal)
+
+![Image](https://raw.githubusercontent.com/guzmanlopez/Modis/master/Figuras/captura-de-pantalla.png)
