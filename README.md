@@ -14,4 +14,7 @@ library(maptools)
 library(rgeos)
 library(rgdal)
 
+Capturas de pantalla
+===
+
 ![Image](https://raw.githubusercontent.com/guzmanlopez/Modis/master/Figuras/captura-de-pantalla.png)
